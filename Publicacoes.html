@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicações - Yoga na Linha do Coração</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #eab308;
+            --primary-dark: #ca8a04;
+            --accent: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fefefe;
+            overflow-x: hidden;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.95) 0%, rgba(202, 138, 4, 0.95) 100%);
+        }
+        
+        .gold-text {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .amber-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        /* Animações inspiradas na Horizon Academy */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .fade-in-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .fade-in-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .fade-in-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .scale-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .stagger-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.4); }
+        }
+        
+        .slide-in-from-bottom {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .slide-in-from-bottom.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gradient-border {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark), var(--accent), var(--primary));
+            border-radius: 1.1rem;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+        
+        .text-shadow-gold {
+            text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #eab308, #ca8a04);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        
+        .language-flag {
+            transition: all 0.3s ease;
+            filter: grayscale(30%);
+        }
+        
+        .language-flag:hover {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+        
+        .language-flag.active {
+            transform: scale(1.15);
+            filter: grayscale(0%);
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+        }
+        
+        .dark-text {
+            color: #1f2937;
+        }
+        
+        .darker-text {
+            color: #111827;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), 
+                        url("ChatGPT\ Image\ 8_10_2025\,\ 15_00_35.png");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .loader-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #eab308, #ca8a04);
+            width: 0%;
+            animation: loading 2s ease-in-out forwards;
+            border-radius: 2px;
+        }
+
+        .loader-text {
+            color: #4b5563;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        /* Estilos específicos para a página de Publicações */
+        .book-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .book-cover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .book-cover:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+        
+        /* Correção para centralização do hero */
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+        
+        .hero-content {
+            width: 100%;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Loader com ícone e barra de progresso -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <img src="iconeeee.png" alt="Yoga na Linha do Coração">
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <div class="loader-text">Carregando...</div>
+        </div>
+    </div>
+
+    <!-- Hotbar/Navbar Centralizada e Compacta -->
+    <nav class="gold-gradient shadow-2xl sticky top-0 z-50 py-2">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col items-center space-y-3">
+                <!-- Logo Compacta -->
+                <div class="flex items-center fade-in-left">
+                    <!-- Imagem personalizada -->
+                    <link rel="icon" type="image/x-icon" 
+                    href="iconeeee.png">
+                    <div class="text-white text-lg font-bold tracking-wider">
+                        YOGA NA LINHA DO CORAÇÃO
+                    </div>
+                </div>
+
+                <!-- Menu Desktop Compacto -->
+                <div class="hidden lg:flex space-x-1">
+                    <a href="index.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Inicio</a>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Sobre <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="absolute left-0 mt-1 w-40 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="Historia.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">História</a>
+                            <a href="Método.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Método</a>
+                            <a href="Facilitadores.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">Facilitadores</a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                         </a>
+                        <div class="absolute left-0 mt-1 w-52 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="YogaKids.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">YogaKids</a>
+                            <a href="YogaDance.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Yoga Dance</a>
+                            <a href="YogaCorporate.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Yoga Corporativo</a>
+                            <a href="LeituraEnergetica.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Leitura Energética</a>
+                            <a href="LimpezaEner.html"class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Limpeza Vibracional</a>
+                            <a href="CasaLuz.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">CASA DA LUZ</a>
+                        </div>
+                    </div>
+                    
+                    <a href="Formaçao.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Formação</a>
+                    <a href="Depoimentos.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Depoimentos</a>
+                    <a href="Aulas.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Aulas</a>
+                    <a href="Agenda.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Agenda</a>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Conteúdos <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="absolute left-0 mt-1 w-44 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="Livros.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">LIVROS INFANTIS</a>
+                            <a href="Publicacoes.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm bg-amber-600/80">Publicações</a>
+                            <a href="Videos.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Vídeos</a>
+                            <a href="Blog.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">Blog</a>
+                        </div>
+                    </div>
+                    
+                    <a href="Contacto.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Contacto</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden bg-amber-600/95 backdrop-blur-sm hidden mt-2">
+            <div class="container mx-auto px-4 py-3 space-y-1">
+                <a href="index.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Inicio</a>
+                <a href="Historia.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">História</a>
+                <a href="Método.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Método</a>
+                <a href="YogaKids.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">YogaKids</a>
+                <a href="YogaDance.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Yoga Dance</a>
+                <a href="YogaCorporate.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Yoga Corporativo</a>
+                <a href="LeituraEnergetica.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Leitura Energética</a>
+                <a href="LimpezaEner.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Limpeza Vibracional</a>
+                <a href="CasaLuz.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">CASA DA LUZ</a>
+                <a href="Formaçao.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Formação</a>
+                <a href="Facilitadores.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Facilitadores</a>
+                <a href="Depoimentos.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Depoimentos</a>
+                <a href="Aulas.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Aulas</a>
+                <a href="Agenda.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Agenda</a>
+                <a href="Livros.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">LIVROS INFANTIS</a>
+                <a href="Publicacoes.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm bg-amber-700/80">Publicações</a>
+                <a href="Videos.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Vídeos</a>
+                <a href="Blog.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Blog</a>
+                <a href="Contacto.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Language Selector - Centered below hotbar -->
+    <div class="bg-white/90 py-3 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center space-x-6 md:space-x-8">
+                <img src="https://flagcdn.com/w40/pt.png" alt="Português" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer active" data-lang="pt">
+                <img src="https://flagcdn.com/w40/fr.png" alt="Francês" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="fr">
+                <img src="https://flagcdn.com/w40/gb.png" alt="Inglês" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="en">
+                <img src="https://flagcdn.com/w40/es.png" alt="Espanhol" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="es">
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section para Publicações - CORRIGIDA -->
+    <section class="hero-bg py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Elementos decorativos animados -->
+        <div class="absolute top-10 left-10 w-20 h-20 bg-amber-400/20 rounded-full blur-xl float-animation"></div>
+        <div class="absolute bottom-20 right-20 w-32 h-32 bg-amber-300/20 rounded-full blur-xl float-animation" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-500/10 rounded-full blur-lg float-animation" style="animation-delay: 1s;"></div>
+        
+        <!-- Container corrigido para centralização -->
+        <div class="hero-container">
+            <div class="hero-content text-center">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl mx-auto">
+                    <h1 class="hero-title text-4xl md:text-6xl font-bold text-white mb-6 text-shadow-gold tracking-tight fade-in-up">
+                        PUBLICAÇÕES
+                    </h1>
+                    
+                    <div class="my-8 flex justify-center fade-in-up" style="transition-delay: 0.2s;">
+                        <div class="w-20 h-1 bg-gradient-to-r from-amber-200 to-amber-400 rounded-full"></div>
+                        <div class="w-3 h-3 bg-amber-400 rounded-full mx-4 mt-[-4px] float-animation"></div>
+                        <div class="w-20 h-1 bg-gradient-to-r from-amber-400 to-amber-200 rounded-full"></div>
+                    </div>
+                    
+                    <p class="text-xl md:text-2xl text-white font-light tracking-wide italic fade-in-up" style="transition-delay: 0.4s;">
+                        Conhecimento e sabedoria para a sua jornada espiritual
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Publicações -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-amber-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold darker-text mb-6 fade-in-up">Nossas Publicações</h2>
+                <p class="text-xl dark-text max-w-2xl mx-auto fade-in-up" style="transition-delay: 0.2s;">
+                    Descubra os nossos livros e manuais que irão guiá-lo na sua jornada de transformação pessoal
+                </p>
+            </div>
+            
+            <!-- Grid de Publicações -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Manual de Yoga na Linha do Coração -->
+                <div class="book-card gradient-border p-8 transform hover:-translate-y-2 transition duration-300 group stagger-item">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <div class="flex-shrink-0">
+                            <div class="book-cover w-48 h-64 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg shadow-xl flex items-center justify-center text-white text-center p-4">
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2">Manual de Yoga</h3>
+                                    <p class="text-sm">na Linha do Coração</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <h3 class="darker-text text-2xl font-semibold mb-4">Manual de Yoga na Linha do Coração</h3>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center">
+                                    <i class="fas fa-palette text-amber-500 mr-2"></i>
+                                    <span class="dark-text">Ilustrado a cores</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-book text-amber-500 mr-2"></i>
+                                    <span class="dark-text">300 páginas</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-euro-sign text-amber-500 mr-2"></i>
+                                    <span class="dark-text font-bold">50€</span>
+                                </div>
+                            </div>
+                            
+                            <p class="dark-text leading-relaxed mb-6">
+                                Um guia completo e profundo sobre a prática do Yoga na Linha do Coração. 
+                                Este manual oferece instruções detalhadas, ilustrações coloridas e 
+                                ensinamentos espirituais para uma transformação integral.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-3">
+                                <span class="price-tag">50€</span>
+                                <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                                    Comprar Agora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Os Espíritos da Natureza -->
+                <div class="book-card gradient-border p-8 transform hover:-translate-y-2 transition duration-300 group stagger-item" style="transition-delay: 0.2s;">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <div class="flex-shrink-0">
+                            <div class="book-cover w-48 h-64 bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-xl flex items-center justify-center text-white text-center p-4">
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2">Os Espíritos</h3>
+                                    <p class="text-sm">da Natureza</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <h3 class="darker-text text-2xl font-semibold mb-4">Os Espíritos da Natureza</h3>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center">
+                                    <i class="fas fa-globe text-green-500 mr-2"></i>
+                                    <span class="dark-text">Uma informação Universal para um Bem Mundial</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-book text-green-500 mr-2"></i>
+                                    <span class="dark-text">Capa e contra capa dura</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-palette text-green-500 mr-2"></i>
+                                    <span class="dark-text">Ilustrado a cores</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-file text-green-500 mr-2"></i>
+                                    <span class="dark-text">18 páginas</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-euro-sign text-green-500 mr-2"></i>
+                                    <span class="dark-text font-bold">18€</span>
+                                </div>
+                            </div>
+                            
+                            <p class="dark-text leading-relaxed mb-6">
+                                Uma obra inspiradora que revela a sabedoria universal dos espíritos da natureza. 
+                                Este livro oferece uma visão profunda sobre a conexão entre a humanidade e o 
+                                mundo natural, promovendo harmonia e bem-estar global.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-3">
+                                <span class="price-tag bg-gradient-to-r from-green-500 to-green-600">18€</span>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                                    Comprar Agora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Benefícios -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-amber-500 to-amber-600 text-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 fade-in-up">Por que adquirir as nossas publicações?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="stagger-item">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lightbulb text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Conhecimento Profundo</h3>
+                    <p class="text-amber-100">Acesso a ensinamentos espirituais e práticas transformadoras.</p>
+                </div>
+                
+                <div class="stagger-item" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Transformação Pessoal</h3>
+                    <p class="text-amber-100">Guias práticos para o seu desenvolvimento espiritual e bem-estar.</p>
+                </div>
+                
+                <div class="stagger-item" style="transition-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Partilha Comunitária</h3>
+                    <p class="text-amber-100">Conhecimento que pode ser partilhado com familiares e amigos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Apenas ícones sociais -->
+    <footer class="bg-white/90 backdrop-blur-sm py-8 mt-auto border-t border-amber-200/50">
+        <div class="container mx-auto px-4">
+            <!-- Social Media -->
+            <div class="flex justify-center space-x-8">
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform float-animation" style="animation-delay: 0s;">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform float-animation" style="animation-delay: 0.2s;">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform float-animation" style="animation-delay: 0.4s;">
+                    <i class="fab fa-youtube text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform float-animation" style="animation-delay: 0.6s;">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform float-animation" style="animation-delay: 0.8s;">
+                    <i class="fab fa-tiktok text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Loader functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            
+            // Mostrar o loader por 2 segundos
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 2000);
+            
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Language selector
+            const languageFlags = document.querySelectorAll('.language-flag');
+            
+            languageFlags.forEach(flag => {
+                flag.addEventListener('click', function() {
+                    // Remove active class from all flags
+                    languageFlags.forEach(f => f.classList.remove('active'));
+                    // Add active class to clicked flag
+                    this.classList.add('active');
+                    // In a real implementation, you would change the language here
+                    alert('Idioma alterado para: ' + this.getAttribute('alt'));
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                
+                if (mobileMenu && mobileMenuButton && 
+                    !mobileMenu.contains(event.target) && 
+                    !mobileMenuButton.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+            
+            // Scroll animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all elements with animation classes
+            document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .scale-in, .slide-in-from-bottom, .stagger-item').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
