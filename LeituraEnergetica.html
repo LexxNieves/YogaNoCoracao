@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitura Energética Da Aura - Yoga na Linha do Coração</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url("imagem_2025-10-08_154711746.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #eab308, #ca8a04);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.95) 0%, rgba(202, 138, 4, 0.95) 100%);
+        }
+        .gold-text {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .amber-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .language-flag {
+            transition: all 0.3s ease;
+            filter: grayscale(30%);
+        }
+        .language-flag:hover {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+        .language-flag.active {
+            transform: scale(1.15);
+            filter: grayscale(0%);
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+        }
+        .dark-text {
+            color: #1f2937;
+        }
+        .darker-text {
+            color: #111827;
+        }
+        .logo-image {
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s ease;
+        }
+        .logo-image:hover {
+            transform: scale(1.1);
+        }
+        .energy-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .energy-card:hover {
+            transform: translateY(-5px);
+            border-left-color: #eab308;
+            box-shadow: 0 10px 25px -5px rgba(234, 179, 8, 0.1);
+        }
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .show-content {
+            max-height: 2000px;
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .slide {
+            display: none;
+            animation: fade 1.5s ease-in-out;
+        }
+        @keyframes fade {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+        .active-slide {
+            display: block;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: #d1d5db;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active-dot, .dot:hover {
+            background-color: #eab308;
+        }
+        .energy-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 2px;
+        }
+        .aura-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #06b6d4 100%);
+        }
+        /* Mobile Menu Styles */
+#mobile-menu {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#mobile-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+#mobile-menu::-webkit-scrollbar-track {
+    background: rgba(234, 179, 8, 0.1);
+    border-radius: 3px;
+}
+
+#mobile-menu::-webkit-scrollbar-thumb {
+    background: rgba(234, 179, 8, 0.5);
+    border-radius: 3px;
+}
+
+#mobile-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(234, 179, 8, 0.7);
+}
+
+/* Garantir que o menu mobile não fique muito alto em telas pequenas */
+@media (max-height: 600px) {
+    #mobile-menu {
+        max-height: 70vh;
+    }
+} 
+
+    </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Hotbar/Navbar Centralizada e Compacta -->
+    <nav class="gold-gradient shadow-2xl sticky top-0 z-50 py-2">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col items-center space-y-3">
+                <!-- Logo Compacta -->
+                <div class="flex items-center">
+                    
+                    <div class="text-white text-lg font-bold tracking-wider">
+                        YOGA NA LINHA DO CORAÇÃO
+                    </div>
+                </div>
+
+                <!-- Menu Desktop Compacto -->
+                <div class="hidden lg:flex space-x-1">
+                    <a href="index.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Inicio</a>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Sobre <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="absolute left-0 mt-1 w-40 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="Historia.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">História</a>
+                            <a href="Método.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Método</a>
+                            <a href="Facilitadores.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">Facilitadores</a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Serviços <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="absolute left-0 mt-1 w-52 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="YogaKids.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">YogaKids</a>
+                            <a href="YogaDance.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Yoga Dance</a>
+                            <a href="YogaCorporate.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Yoga Corporativo</a>
+                            <a href="LeituraEnergetica.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Leitura Energética</a>
+                            <a href="LimpezaEner.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Limpeza Vibracional</a>
+                            <a href="CasaLuz.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">CASA DA LUZ</a>
+                        </div>
+                    </div>
+                    
+                    <a href="Formaçao.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Formação</a>
+                    <a href="Depoimentos.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Depoimentos</a>
+                    <a href="Aulas.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Aulas</a>
+                    <a href="Agenda.html" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Agenda</a>
+                    
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            Conteúdos <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="absolute left-0 mt-1 w-44 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                            <a href="Livros.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-t-lg text-sm">LIVROS INFANTIS</a>
+                            <a href="Publicacoes.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Publicações</a>
+                            <a href="Videos.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">Vídeos</a>
+                            <a href="Blog.html" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">Blog</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition">Contacto</a>
+                
+                    <!-- Botão de Login/User - Substitua o botão de login atual -->
+                    <div class="relative group">
+                        <!-- Botão de Login (quando não autenticado) -->
+                        <a href="#" id="login-btn" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                            <i class="fas fa-user-circle mr-1 text-xs"></i> Login
+                        </a>
+                        
+                        <!-- Dropdown do Utilizador (quando autenticado) -->
+                        <div id="user-menu" class="hidden">
+                            <a href="#" id="user-btn" class="nav-link text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-amber-600/30 transition flex items-center">
+                                <i class="fas fa-user-circle mr-1 text-xs"></i>
+                                <span id="user-name">Utilizador</span>
+                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </a>
+                            <div class="absolute right-0 mt-1 w-48 bg-amber-500/95 backdrop-blur-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-amber-400/30">
+                                <div class="p-3 border-b border-amber-400/30">
+                                    <p class="text-sm font-medium text-white" id="user-display-name">Nome do Utilizador</p>
+                                    <p class="text-xs text-amber-100 truncate" id="user-email">email@exemplo.com</p>
+                                </div>
+                                <a href="#" id="user-info" class="block px-4 py-2 text-white hover:bg-amber-600/80 text-sm">
+                                    <i class="fas fa-user mr-2"></i>Informações
+                                </a>
+                                <a href="#" id="logout-btn" class="block px-4 py-2 text-white hover:bg-amber-600/80 rounded-b-lg text-sm">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu com classes Tailwind para scroll -->
+<div id="mobile-menu" class="lg:hidden bg-amber-600/95 backdrop-blur-sm hidden mt-2 max-h-[80vh] overflow-y-auto">
+    <div class="container mx-auto px-4 py-3 space-y-1">
+        <a href="index.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Inicio</a>
+        <a href="Historia.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">História</a>
+        <a href="Método.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Método</a>
+        <a href="YogaKids.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">YogaKids</a>
+        <a href="YogaDance.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Yoga Dance</a>
+        <a href="YogaCorporate.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Yoga Corporativo</a>
+        <a href="LeituraEnergetica.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Leitura Energética</a>
+        <a href="LimpezaEner.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Limpeza Vibracional</a>
+        <a href="CasaLuz.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">CASA DA LUZ</a>
+        <a href="Formaçao.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Formação</a>
+        <a href="Facilitadores.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Facilitadores</a>
+        <a href="Depoimentos.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Depoimentos</a>
+        <a href="Aulas.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Aulas</a>
+        <a href="Agenda.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm bg-amber-700/80">Agenda</a>
+        <a href="Livros.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">LIVROS INFANTIS</a>
+        <a href="Publicacoes.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Publicações</a>
+        <a href="Videos.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Vídeos</a>
+        <a href="Blog.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Blog</a>
+        <a href="Contacto.html" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">Contacto</a>
+        
+        <!-- Seção de Autenticação Mobile -->
+        <div id="mobile-auth-section">
+            <!-- Botão de Login (quando não autenticado) -->
+            <a href="#" id="mobile-login-btn" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">
+                <i class="fas fa-user-circle mr-2"></i> Login
+            </a>
+            
+            <!-- Menu do Utilizador (quando autenticado) -->
+            <div id="mobile-user-menu" class="hidden">
+                <div class="px-4 py-2 border-b border-amber-500/30">
+                    <p class="text-white text-sm font-medium" id="mobile-user-name">Utilizador</p>
+                    <p class="text-amber-100 text-xs truncate" id="mobile-user-email">email@exemplo.com</p>
+                </div>
+                <a href="#" id="mobile-user-info" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">
+                    <i class="fas fa-user mr-2"></i>Informações
+                </a>
+                <a href="#" id="mobile-logout-btn" class="block text-white py-2 px-4 rounded hover:bg-amber-700/80 text-sm">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </nav>
+
+    <!-- Language Selector - Centered below hotbar -->
+    <div class="bg-white/90 py-3 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center space-x-6 md:space-x-8">
+                <img src="https://flagcdn.com/w40/pt.png" alt="Português" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer active" data-lang="pt">
+                <img src="https://flagcdn.com/w40/fr.png" alt="Francês" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="fr">
+                <img src="https://flagcdn.com/w40/gb.png" alt="Inglês" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="en">
+                <img src="https://flagcdn.com/w40/es.png" alt="Espanhol" class="language-flag w-8 h-6 md:w-10 md:h-7 rounded cursor-pointer" data-lang="es">
+            </div>
+        </div>
+    </div>
+
+    <!-- Leitura Energética Section -->
+    <div class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-10 md:p-16 shadow-2xl border border-amber-200/50">
+                <!-- Título Leitura Energética -->
+                <h1 class="hero-title text-4xl md:text-5xl font-bold gold-text mb-8 text-center text-glow tracking-tight">
+                    LEITURA ENERGÉTICA
+                </h1>
+                
+                <!-- Citação Inspiradora -->
+                <div class="text-center mb-12 bg-purple-50 p-6 rounded-2xl border border-purple-200/50">
+                    <p class="text-xl md:text-2xl darker-text font-medium italic leading-relaxed">
+                        "DESCUBRA O SEU CAMPO ENERGÉTICO E LIBERTE O SEU POTENCIAL DE CRESCIMENTO PESSOAL"
+                    </p>
+                </div>
+
+                <!-- Conteúdo Principal -->
+                <div class="space-y-6 dark-text leading-relaxed text-lg">
+                    <p class="text-center">
+                        A Leitura Energética é uma ferramenta poderosa para compreender o seu campo energético, identificar bloqueios e potencializar os seus recursos internos.
+                    </p>
+
+                    <!-- O Que é Leitura Energética -->
+                    <div class="energy-card bg-white p-8 rounded-xl border border-amber-200/50 shadow-sm mt-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 aura-gradient rounded-full flex items-center justify-center mr-6">
+                                <i class="fas fa-eye text-white text-2xl"></i>
+                            </div>
+                            <h2 class="darker-text text-3xl font-semibold">O QUE É A LEITURA ENERGÉTICA?</h2>
+                        </div>
+                        <div class="space-y-4 dark-text">
+                            <p>
+                                A Leitura Energética é um processo de análise detalhada do seu campo energético pessoal. Através desta técnica, conseguimos identificar:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Bloqueios energéticos que limitam o seu potencial</li>
+                                <li>Padrões emocionais repetitivos</li>
+                                <li>Potencialidades e talentos naturais</li>
+                                <li>Conexões com experiências passadas</li>
+                                <li>Caminhos de evolução pessoal</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo Oculto -->
+                    <div id="hidden-content" class="hidden-content">
+                        <div class="space-y-8 pt-6">
+                            <!-- Benefícios da Leitura Energética -->
+                            <div class="energy-card bg-white p-8 rounded-xl border border-amber-200/50 shadow-sm">
+                                <h3 class="darker-text text-2xl font-semibold mb-6 text-center">BENEFÍCIOS DA LEITURA ENERGÉTICA</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 aura-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-lightbulb text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="darker-text text-lg font-semibold mb-2">Autoconhecimento Profundo</h4>
+                                            <p class="dark-text text-sm">Compreenda os padrões que influenciam sua vida e relacionamentos</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 aura-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-heart text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="darker-text text-lg font-semibold mb-2">Cura Emocional</h4>
+                                            <p class="dark-text text-sm">Liberte emoções reprimidas e encontre equilíbrio interior</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 aura-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-bullseye text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="darker-text text-lg font-semibold mb-2">Clareza de Propósito</h4>
+                                            <p class="dark-text text-sm">Descubra sua missão de vida e direção pessoal</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 aura-gradient rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-shield-alt text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="darker-text text-lg font-semibold mb-2">Proteção Energética</h4>
+                                            <p class="dark-text text-sm">Aprenda a proteger seu campo energético de influências externas</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Como Funciona -->
+                            <div class="energy-card bg-white p-8 rounded-xl border border-amber-200/50 shadow-sm">
+                                <h3 class="darker-text text-2xl font-semibold mb-6 text-center">COMO FUNCIONA UMA SESSÃO</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div class="text-center">
+                                        <div class="w-20 h-20 aura-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <span class="text-white text-2xl font-bold">1</span>
+                                        </div>
+                                        <h4 class="darker-text text-lg font-semibold mb-2">Análise Inicial</h4>
+                                        <p class="dark-text text-sm">Avaliação do seu campo energético através de técnicas sensoriais avançadas</p>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <div class="w-20 h-20 aura-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <span class="text-white text-2xl font-bold">2</span>
+                                        </div>
+                                        <h4 class="darker-text text-lg font-semibold mb-2">Identificação</h4>
+                                        <p class="dark-text text-sm">Deteção de bloqueios, padrões e potencialidades no seu sistema energético</p>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <div class="w-20 h-20 aura-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <span class="text-white text-2xl font-bold">3</span>
+                                        </div>
+                                        <h4 class="darker-text text-lg font-semibold mb-2">Orientação</h4>
+                                        <p class="dark-text text-sm">Guia personalizado para o seu processo de crescimento e transformação</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Para Quem é Indicado -->
+                            <div class="energy-card bg-white p-8 rounded-xl border border-amber-200/50 shadow-sm">
+                                <h3 class="darker-text text-2xl font-semibold mb-6 text-center">PARA QUEM É INDICADO?</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200/50">
+                                        <h4 class="darker-text text-lg font-semibold mb-3 flex items-center">
+                                            <i class="fas fa-check text-purple-600 mr-2"></i>
+                                            Pessoas em Transição
+                                        </h4>
+                                        <p class="dark-text text-sm">Que estão passando por mudanças profissionais, relacionamentos ou fase de vida</p>
+                                    </div>
+                                    
+                                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200/50">
+                                        <h4 class="darker-text text-lg font-semibold mb-3 flex items-center">
+                                            <i class="fas fa-check text-purple-600 mr-2"></i>
+                                            Buscadores Espirituais
+                                        </h4>
+                                        <p class="dark-text text-sm">Que desejam aprofundar seu autoconhecimento e desenvolvimento espiritual</p>
+                                    </div>
+                                    
+                                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200/50">
+                                        <h4 class="darker-text text-lg font-semibold mb-3 flex items-center">
+                                            <i class="fas fa-check text-purple-600 mr-2"></i>
+                                            Profissionais
+                                        </h4>
+                                        <p class="dark-text text-sm">Que querem melhorar seu desempenho e encontrar equilíbrio entre vida pessoal e profissional</p>
+                                    </div>
+                                    
+                                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200/50">
+                                        <h4 class="darker-text text-lg font-semibold mb-3 flex items-center">
+                                            <i class="fas fa-check text-purple-600 mr-2"></i>
+                                            Todos os Seres
+                                        </h4>
+                                        <p class="dark-text text-sm">Que desejam compreender melhor sua jornada e propósito de vida</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Depoimentos -->
+                            <div class="mt-8">
+                                <h3 class="darker-text text-2xl font-semibold mb-6 text-center">O QUE DIZEM QUEM JÁ EXPERIMENTOU</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-white p-6 rounded-xl border border-amber-200/50">
+                                        <div class="flex items-center mb-4">
+                                            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-user text-amber-600"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Maria Santos</h4>
+                                                <div class="flex text-amber-500">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 italic">
+                                            "A leitura energética com a Rita foi transformadora. Consegui identificar padrões que se repetiam na minha vida e finalmente entendi o porquê. Recomendo a todos que buscam autoconhecimento."
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="bg-white p-6 rounded-xl border border-amber-200/50">
+                                        <div class="flex items-center mb-4">
+                                            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-user text-amber-600"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">João Silva</h4>
+                                                <div class="flex text-amber-500">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 italic">
+                                            "Incrível como a leitura energética me mostrou caminhos que eu nem sabia que existiam. Estou mais consciente das minhas escolhas e do meu propósito de vida."
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão Ler Mais -->
+                    <div class="text-center mt-8">
+                        <button id="read-more-btn" class="amber-gradient text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                            Ler Mais <i class="fas fa-chevron-down ml-2"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Agendamento -->
+                    <div class="text-center mt-12 bg-gradient-to-r from-amber-100 to-yellow-100 p-8 rounded-2xl border border-amber-300/50">
+                        <h3 class="darker-text text-2xl font-semibold mb-4">PRONTO PARA DESCUBRIR O SEU POTENCIAL?</h3>
+                        <p class="dark-text mb-6">Agende sua sessão de Leitura Energética e comece sua jornada de transformação</p>
+                        <button class="aura-gradient text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                            Agendar Sessão
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slideshow de Fotos -->
+            <div class="mt-16 bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-amber-200/50">
+                <h2 class="hero-title text-3xl font-bold gold-text mb-8 text-center text-glow">
+                    Momentos de Transformação
+                </h2>
+                
+                <div class="slideshow-container">
+                    <!-- Slides -->
+                    <div class="slide active-slide">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Sessão de leitura energética" 
+                             class="w-full h-64 md:h-96 object-cover rounded-lg shadow-md">
+                        <div class="text-center mt-4 dark-text">Sessões individuais de análise energética personalizada</div>
+                    </div>
+                    
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1593810450967-f9c42742e326?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Processo de autoconhecimento" 
+                             class="w-full h-64 md:h-96 object-cover rounded-lg shadow-md">
+                        <div class="text-center mt-4 dark-text">Jornada de autoconhecimento e crescimento pessoal</div>
+                    </div>
+                    
+                    <!-- Navigation dots -->
+                    <div class="text-center mt-6">
+                        <span class="dot active-dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                    </div>
+                    
+                    <!-- Navigation arrows -->
+                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition" onclick="plusSlides(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition" onclick="plusSlides(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Apenas ícones sociais -->
+    <footer class="bg-white/90 backdrop-blur-sm py-8 mt-auto border-t border-amber-200/50">
+        <div class="container mx-auto px-4">
+            <!-- Social Media -->
+            <div class="flex justify-center space-x-8">
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform">
+                    <i class="fab fa-youtube text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                </a>
+                <a href="#" class="text-amber-600 hover:text-amber-800 hover:scale-110 transition duration-300 transform">
+                    <i class="fab fa-tiktok text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+        <div id="login-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] hidden transition-opacity duration-300">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform scale-95 transition-transform duration-300" id="modal-content">
+                <!-- Cabeçalho do Modal -->
+                <div class="gold-gradient rounded-t-2xl p-6 text-center relative">
+                    <h3 class="text-2xl font-bold text-white">Entrar na Conta</h3>
+                    <button id="close-modal" class="absolute top-4 right-4 text-white hover:text-amber-200 transition">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Formulário de Login -->
+                <div class="p-8">
+                    <!-- Mensagem de Status -->
+                    <div id="login-message" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+                    
+                    <form id="login-form" class="space-y-6">
+                        <div>
+                            <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                            <input type="email" id="email" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                                placeholder="seu@email.com">
+                        </div>
+                        
+                        <div>
+                            <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Senha</label>
+                            <input type="password" id="password" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                                placeholder="Sua senha">
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="remember-me" class="rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                <span class="ml-2 text-sm text-gray-600">Lembrar-me</span>
+                            </label>
+                            <a href="#" class="text-sm text-amber-600 hover:text-amber-700 transition">Esqueceu a senha?</a>
+                        </div>
+                        
+                        <button type="submit" id="login-submit" 
+                                class="w-full amber-gradient text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center">
+                            <span id="login-text">Entrar</span>
+                            <div id="login-spinner" class="hidden ml-2">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-600 text-sm">
+                            Não tem uma conta? 
+                            <a href="registar.html" class="text-amber-600 hover:text-amber-700 font-medium transition">Registre-se</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        // Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyA3zbLeOz_y59NYLu5AbIN3xMZ6-3NTOYQ",
+    authDomain: "yoganocoracao-ddf1d.firebaseapp.com",
+    projectId: "yoganocoracao-ddf1d",
+    storageBucket: "yoganocoracao-ddf1d.firebasestorage.app",
+    messagingSenderId: "1011537032289",
+    appId: "1:1011537032289:web:4f394986de1f2991ea2620",
+    measurementId: "G-LGS8SC9KKS"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Elementos do DOM
+const loginBtn = document.getElementById('login-btn');
+const userMenu = document.getElementById('user-menu');
+const userBtn = document.getElementById('user-btn');
+const userName = document.getElementById('user-name');
+const userDisplayName = document.getElementById('user-display-name');
+const userEmail = document.getElementById('user-email');
+const userInfo = document.getElementById('user-info');
+const logoutBtn = document.getElementById('logout-btn');
+const loginModal = document.getElementById('login-modal');
+const closeModal = document.getElementById('close-modal');
+const modalContent = document.getElementById('modal-content');
+const loginForm = document.getElementById('login-form');
+const loginMessage = document.getElementById('login-message');
+const loginSubmit = document.getElementById('login-submit');
+const loginText = document.getElementById('login-text');
+const loginSpinner = document.getElementById('login-spinner');
+
+// Função para obter dados do utilizador do Firestore
+async function getUserData(userId) {
+    try {
+        const userDoc = await db.collection('users').doc(userId).get();
+        if (userDoc.exists) {
+            return userDoc.data();
+        }
+        return null;
+    } catch (error) {
+        console.error('Erro ao obter dados do utilizador:', error);
+        return null;
+    }
+}
+
+// Função para atualizar a UI baseada no estado de autenticação
+async function updateAuthUI(user) {
+    if (user) {
+        // Utilizador está logado - mostrar menu do utilizador
+        loginBtn.classList.add('hidden');
+        userMenu.classList.remove('hidden');
+        
+        // Obter dados do utilizador do Firestore
+        const userData = await getUserData(user.uid);
+        
+        if (userData) {
+            const displayName = userData.fullName || 'Utilizador';
+            userName.textContent = displayName;
+            userDisplayName.textContent = displayName;
+            userEmail.textContent = user.email;
+        } else {
+            // Fallback para dados do Auth
+            const displayName = user.displayName || 'Utilizador';
+            userName.textContent = displayName;
+            userDisplayName.textContent = displayName;
+            userEmail.textContent = user.email;
+        }
+        
+    } else {
+        // Utilizador não está logado - mostrar botão de login
+        loginBtn.classList.remove('hidden');
+        userMenu.classList.add('hidden');
+    }
+}
+
+// Observador de estado de autenticação
+auth.onAuthStateChanged(async (user) => {
+    await updateAuthUI(user);
+});
+
+// Logout
+logoutBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    try {
+        await auth.signOut();
+        console.log('Utilizador deslogado com sucesso');
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        alert('Erro ao fazer logout. Tente novamente.');
+    }
+});
+
+// Informações do utilizador
+userInfo.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Página de informações do utilizador em desenvolvimento.');
+});
+
+// Função para mostrar mensagens
+function showMessage(message, type = 'error') {
+    loginMessage.classList.remove('hidden');
+    loginMessage.textContent = message;
+    loginMessage.className = `mb-4 p-3 rounded-lg text-sm ${type === 'error' ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-green-700 border border-green-200'}`;
+}
+
+// Função para mostrar loading
+function setLoading(isLoading) {
+    if (isLoading) {
+        loginSubmit.disabled = true;
+        loginText.classList.add('hidden');
+        loginSpinner.classList.remove('hidden');
+    } else {
+        loginSubmit.disabled = false;
+        loginText.classList.remove('hidden');
+        loginSpinner.classList.add('hidden');
+    }
+}
+
+// Abrir modal de login
+loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.classList.remove('hidden');
+    loginMessage.classList.add('hidden');
+    loginForm.reset();
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+    }, 50);
+});
+
+// Fechar modal
+closeModal.addEventListener('click', () => {
+    closeLoginModal();
+});
+
+// Fechar modal clicando fora
+loginModal.addEventListener('click', (e) => {
+    if (e.target === loginModal) {
+        closeLoginModal();
+    }
+});
+
+// Fechar com ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !loginModal.classList.contains('hidden')) {
+        closeLoginModal();
+    }
+});
+
+// Função para fechar modal
+function closeLoginModal() {
+    modalContent.classList.remove('scale-100');
+    modalContent.classList.add('scale-95');
+    setTimeout(() => {
+        loginModal.classList.add('hidden');
+    }, 300);
+}
+
+// Submit do formulário com Firebase
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        showMessage('Por favor, preencha todos os campos.');
+        return;
+    }
+    
+    setLoading(true);
+    loginMessage.classList.add('hidden');
+    
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        
+        showMessage('Login realizado com sucesso!', 'success');
+        
+        // Fechar modal após 1.5 segundos
+        setTimeout(() => {
+            closeLoginModal();
+            console.log('Utilizador logado:', user.email);
+        }, 1500);
+        
+    } catch (error) {
+        console.error('Erro no login:', error);
+        
+        let errorMessage = 'Erro ao fazer login. Tente novamente.';
+        
+        switch (error.code) {
+            case 'auth/invalid-email':
+                errorMessage = 'Email inválido.';
+                break;
+            case 'auth/user-disabled':
+                errorMessage = 'Esta conta foi desativada.';
+                break;
+            case 'auth/user-not-found':
+                errorMessage = 'Nenhuma conta encontrada com este email.';
+                break;
+            case 'auth/wrong-password':
+                errorMessage = 'Senha incorreta.';
+                break;
+            case 'auth/too-many-requests':
+                errorMessage = 'Muitas tentativas de login. Tente novamente mais tarde.';
+                break;
+        }
+        
+        showMessage(errorMessage);
+    } finally {
+        setLoading(false);
+    }
+});
+
+
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Language selector
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageFlags = document.querySelectorAll('.language-flag');
+            
+            languageFlags.forEach(flag => {
+                flag.addEventListener('click', function() {
+                    // Remove active class from all flags
+                    languageFlags.forEach(f => f.classList.remove('active'));
+                    // Add active class to clicked flag
+                    this.classList.add('active');
+                    // In a real implementation, you would change the language here
+                    alert('Idioma alterado para: ' + this.getAttribute('alt'));
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                
+                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // Ler Mais functionality
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const hiddenContent = document.getElementById('hidden-content');
+            
+            readMoreBtn.addEventListener('click', function() {
+                hiddenContent.classList.toggle('show-content');
+                
+                if (hiddenContent.classList.contains('show-content')) {
+                    readMoreBtn.innerHTML = 'Ler Menos <i class="fas fa-chevron-up ml-2"></i>';
+                } else {
+                    readMoreBtn.innerHTML = 'Ler Mais <i class="fas fa-chevron-down ml-2"></i>';
+                }
+            });
+
+            // Agendar Sessão button
+            document.querySelector('.aura-gradient').addEventListener('click', function() {
+                alert('Obrigado pelo seu interesse! Em breve entraremos em contacto para agendar a sua sessão de Leitura Energética.');
+            });
+        });
+
+        // Slideshow functionality
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active-slide");
+            }
+            
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active-dot");
+            }
+            
+            slides[slideIndex - 1].classList.add("active-slide");
+            dots[slideIndex - 1].classList.add("active-dot");
+        }
+
+        // Auto slide change every 5 seconds
+        setInterval(() => {
+            plusSlides(1);
+        }, 5000);
+        // Elementos do DOM para mobile
+const mobileAuthSection = document.getElementById('mobile-auth-section');
+const mobileLoginBtn = document.getElementById('mobile-login-btn');
+const mobileUserMenu = document.getElementById('mobile-user-menu');
+const mobileUserName = document.getElementById('mobile-user-name');
+const mobileUserEmail = document.getElementById('mobile-user-email');
+const mobileUserInfo = document.getElementById('mobile-user-info');
+const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+// Função para atualizar a UI mobile baseada no estado de autenticação
+function updateMobileAuthUI(user) {
+    if (user) {
+        // Utilizador está logado - mostrar menu do utilizador
+        mobileLoginBtn.classList.add('hidden');
+        mobileUserMenu.classList.remove('hidden');
+        
+        // Obter dados do utilizador do Firestore
+        getUserData(user.uid).then(userData => {
+            if (userData) {
+                mobileUserName.textContent = userData.fullName || 'Utilizador';
+                mobileUserEmail.textContent = user.email;
+            } else {
+                // Fallback para dados do Auth
+                mobileUserName.textContent = user.displayName || 'Utilizador';
+                mobileUserEmail.textContent = user.email;
+            }
+        });
+        
+    } else {
+        // Utilizador não está logado - mostrar botão de login
+        mobileLoginBtn.classList.remove('hidden');
+        mobileUserMenu.classList.add('hidden');
+    }
+}
+
+// Atualizar ambos UIs no observador
+auth.onAuthStateChanged(async (user) => {
+    await updateAuthUI(user);
+    updateMobileAuthUI(user);
+});
+
+// Logout mobile
+mobileLogoutBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        await auth.signOut();
+        console.log('Utilizador deslogado com sucesso');
+        document.getElementById('mobile-menu').classList.add('hidden');
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        alert('Erro ao fazer logout. Tente novamente.');
+    }
+});
+
+// Informações do utilizador mobile
+mobileUserInfo.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Página de informações do utilizador em desenvolvimento.');
+    document.getElementById('mobile-menu').classList.add('hidden');
+});
+
+// Login mobile
+mobileLoginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('mobile-menu').classList.add('hidden');
+    loginBtn.click();
+});
+    </script>
+</body>
+</html>
