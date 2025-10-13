@@ -394,6 +394,7 @@
         .comment-item {
             padding: 0.75rem 0;
             border-bottom: 1px solid #e5e7eb;
+            position: relative;
         }
         
         .comment-item:last-child {
@@ -403,16 +404,50 @@
         .comment-author {
             font-weight: 600;
             color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .comment-author-badge {
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
         }
         
         .comment-date {
             font-size: 0.75rem;
             color: #9ca3af;
+            margin-top: 0.125rem;
         }
         
         .comment-text {
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
             color: #4b5563;
+            line-height: 1.5;
+            padding-left: 0.5rem;
+            border-left: 2px solid #e5e7eb;
+        }
+        
+        .delete-comment-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .delete-comment-btn:hover {
+            color: #ef4444;
+            background-color: #fef2f2;
         }
         
         .no-posts {
@@ -1002,6 +1037,27 @@
             }
         }
 
+        // Função para obter o nome completo do utilizador
+        async function getUserFullName(userId) {
+            try {
+                const userData = await getUserData(userId);
+                if (userData && userData.fullName) {
+                    return userData.fullName;
+                }
+                
+                // Se não encontrar no Firestore, tenta obter do Auth
+                const user = auth.currentUser;
+                if (user && user.displayName) {
+                    return user.displayName;
+                }
+                
+                return 'Utilizador';
+            } catch (error) {
+                console.error('Erro ao obter nome do utilizador:', error);
+                return 'Utilizador';
+            }
+        }
+
         // Função para verificar se o utilizador é administrador
         async function checkAdminStatus(user) {
             if (!user) return false;
@@ -1043,6 +1099,9 @@
                     hasImage = true;
                 }
                 
+                // Obter nome completo do utilizador atual
+                const authorName = await getUserFullName(currentUser.uid);
+                
                 // Cria post no Firestore (GRATUITO)
                 await db.collection('posts').add({
                     title: title,
@@ -1050,7 +1109,7 @@
                     imageData: imageData,       // Base64 ou null
                     hasImage: hasImage,         // Flag para saber se tem imagem
                     authorId: currentUser.uid,
-                    authorName: currentUser.displayName || 'Administrador',
+                    authorName: authorName,
                     createdAt: new Date(),
                     likes: [],
                     comments: []
@@ -1350,6 +1409,9 @@
                             post.imageData : 
                             'ChatGPT Image 8_10_2025, 15_00_35.png';
                         
+                        // Verificar se o utilizador atual deu like neste post
+                        const isLiked = currentUser && post.likes && post.likes.includes(currentUser.uid);
+                        
                         return `
                         <div class="blog-post bg-white rounded-lg overflow-hidden" data-post-id="${post.id}">
                             <div class="relative overflow-hidden">
@@ -1359,14 +1421,19 @@
                                 <h3 class="post-title darker-text">${post.title}</h3>
                                 <p class="post-excerpt">${post.description}</p>
                                 <div class="post-meta">
-                                    <span class="post-date">${formatDate(post.createdAt?.toDate())}</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm text-gray-600">Por:</span>
+                                        <span class="font-medium text-amber-600">${post.authorName}</span>
+                                        <span class="post-date text-gray-500">${formatDate(post.createdAt?.toDate())}</span>
+                                    </div>
                                     <div class="post-actions">
-                                        <button class="action-btn like-btn ${post.likes && post.likes.includes(currentUser?.uid) ? 'liked' : ''}" 
+                                        <button class="action-btn like-btn ${isLiked ? 'liked' : ''}" 
                                                 ${!currentUser ? 'disabled' : ''}>
                                             <i class="fas fa-heart"></i>
                                             <span class="like-count">${post.likes ? post.likes.length : 0}</span>
                                         </button>
-                                        <button class="action-btn comment-btn" ${!currentUser ? 'disabled' : ''}>
+                                        <button class="action-btn comment-btn ${post.comments && post.comments.length > 0 ? 'comment-active' : ''}" 
+                                                ${!currentUser ? 'disabled' : ''}>
                                             <i class="fas fa-comment"></i>
                                             <span class="comment-count">${post.comments ? post.comments.length : 0}</span>
                                         </button>
@@ -1379,6 +1446,36 @@
                                     </button>
                                 </div>
                                 ` : ''}
+                            </div>
+                            
+                            <!-- Secção de Comentários (expandível) -->
+                            <div class="comments-section" id="comments-${post.id}">
+                                <div class="comment-form">
+                                    <textarea class="comment-input" placeholder="Escreva o seu comentário..." data-post-id="${post.id}"></textarea>
+                                    <button class="create-post-btn add-comment-btn" data-post-id="${post.id}">
+                                        <i class="fas fa-paper-plane mr-1"></i> Comentar
+                                    </button>
+                                </div>
+                                <div class="comment-list" id="comment-list-${post.id}">
+                                    ${post.comments && post.comments.length > 0 ? 
+                                        post.comments.map(comment => `
+                                            <div class="comment-item" data-comment-id="${comment.id}">
+                                                <div class="comment-author">
+                                                    ${comment.authorName}
+                                                    ${comment.authorId === post.authorId ? '<span class="comment-author-badge">Autor</span>' : ''}
+                                                </div>
+                                                <div class="comment-date">${formatDate(comment.createdAt?.toDate())}</div>
+                                                <div class="comment-text">${comment.text}</div>
+                                                ${currentUser && currentUser.uid === comment.authorId ? `
+                                                    <button class="delete-comment-btn" data-post-id="${post.id}" data-comment-id="${comment.id}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        `).join('') : 
+                                        '<div class="text-center text-gray-500 py-4">Ainda não há comentários</div>'
+                                    }
+                                </div>
                             </div>
                         </div>
                         `;
@@ -1396,7 +1493,9 @@
             return new Intl.DateTimeFormat('pt-PT', {
                 day: '2-digit',
                 month: '2-digit',
-                year: 'numeric'
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             }).format(date);
         }
 
@@ -1416,11 +1515,70 @@
                 });
             });
             
+            // Botões de comentário (expandir/contrair)
+            document.querySelectorAll('.comment-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (!currentUser) {
+                        alert('Precisa de estar logado para comentar.');
+                        return;
+                    }
+                    
+                    const postElement = e.target.closest('.blog-post');
+                    const postId = postElement.dataset.postId;
+                    const commentsSection = document.getElementById(`comments-${postId}`);
+                    
+                    // Alternar a visibilidade da secção de comentários
+                    commentsSection.classList.toggle('expanded');
+                    
+                    // Atualizar estado do botão
+                    btn.classList.toggle('comment-active');
+                });
+            });
+            
+            // Botões de adicionar comentário
+            document.querySelectorAll('.add-comment-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const postId = e.target.dataset.postId;
+                    const commentInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+                    const commentText = commentInput.value.trim();
+                    
+                    if (!commentText) {
+                        alert('Por favor, escreva um comentário.');
+                        return;
+                    }
+                    
+                    await addComment(postId, commentText);
+                    commentInput.value = ''; // Limpar o campo
+                });
+            });
+            
+            // Botões de eliminar comentário
+            document.querySelectorAll('.delete-comment-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const postId = e.target.closest('.delete-comment-btn').dataset.postId;
+                    const commentId = e.target.closest('.delete-comment-btn').dataset.commentId;
+                    
+                    await deleteComment(postId, commentId);
+                });
+            });
+            
             // Botões de eliminar post
             document.querySelectorAll('.delete-post-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const postId = e.target.closest('.delete-post-btn').dataset.postId;
                     showDeleteConfirmModal(postId);
+                });
+            });
+            
+            // Permitir enviar comentário com Enter (mas manter quebra de linha com Shift+Enter)
+            document.querySelectorAll('.comment-input').forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        const postId = e.target.dataset.postId;
+                        const addCommentBtn = document.querySelector(`.add-comment-btn[data-post-id="${postId}"]`);
+                        addCommentBtn.click();
+                    }
                 });
             });
         }
@@ -1453,6 +1611,82 @@
                 loadPosts();
             } catch (error) {
                 console.error('Erro ao alternar like:', error);
+            }
+        }
+
+        // Adicionar comentário a um post
+        async function addComment(postId, commentText) {
+            try {
+                const postRef = db.collection('posts').doc(postId);
+                const postDoc = await postRef.get();
+                
+                if (!postDoc.exists) return;
+                
+                // Criar um ID único para o comentário
+                const commentId = Date.now().toString();
+                
+                // Obter nome completo do utilizador atual
+                const authorName = await getUserFullName(currentUser.uid);
+                
+                // Criar objeto do comentário
+                const comment = {
+                    id: commentId,
+                    text: commentText,
+                    authorId: currentUser.uid,
+                    authorName: authorName,
+                    createdAt: new Date()
+                };
+                
+                // Adicionar comentário ao array de comentários do post
+                await postRef.update({
+                    comments: firebase.firestore.FieldValue.arrayUnion(comment)
+                });
+                
+                // Recarregar posts para atualizar a UI
+                loadPosts();
+                
+            } catch (error) {
+                console.error('Erro ao adicionar comentário:', error);
+                alert('Erro ao adicionar comentário. Tente novamente.');
+            }
+        }
+
+        // Eliminar comentário de um post
+        async function deleteComment(postId, commentId) {
+            try {
+                const postRef = db.collection('posts').doc(postId);
+                const postDoc = await postRef.get();
+                
+                if (!postDoc.exists) return;
+                
+                const post = postDoc.data();
+                const comments = post.comments || [];
+                
+                // Encontrar o comentário a eliminar
+                const commentToDelete = comments.find(c => c.id === commentId);
+                
+                if (!commentToDelete) {
+                    alert('Comentário não encontrado.');
+                    return;
+                }
+                
+                // Verificar se o utilizador atual é o autor do comentário
+                if (commentToDelete.authorId !== currentUser.uid) {
+                    alert('Só pode eliminar os seus próprios comentários.');
+                    return;
+                }
+                
+                // Remover comentário do array
+                await postRef.update({
+                    comments: firebase.firestore.FieldValue.arrayRemove(commentToDelete)
+                });
+                
+                // Recarregar posts para atualizar a UI
+                loadPosts();
+                
+            } catch (error) {
+                console.error('Erro ao eliminar comentário:', error);
+                alert('Erro ao eliminar comentário. Tente novamente.');
             }
         }
 
